@@ -14,9 +14,9 @@ from models.state import State
 from models.user import User
 from os import getenv
 
+
 class DBStorage:
     """The class for the database storage"""
-    
     __engine = None
     __session = None
 
@@ -27,12 +27,15 @@ class DBStorage:
         MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-            format(MYSQL_USER, MYSQL_PWD, MYSQL_HOST, MYSQL_DB))
-        
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+            MYSQL_USER,
+            MYSQL_PWD,
+            MYSQL_HOST,
+            MYSQL_DB))
+
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
-            
+
     def new(self, obj):
         """new object to the current db"""
         self.__session.add(obj)
@@ -48,7 +51,7 @@ class DBStorage:
             "State": State,
             "User": User
         }
-        
+
         for oneClass in classes:
             if cls is None or cls is classes[oneClass] or cls is oneClass:
                 objs = self.__session.query(classes[oneClass]).all()
@@ -56,7 +59,7 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
-            
+
     def close(self):
         """close the session"""
         self.__session.remove()
@@ -64,10 +67,11 @@ class DBStorage:
     def reload(self):
         """create all tables in the databas"""
         Base.metadata.create_all(self.__engine)
-        session_maker = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_maker = sessionmaker(bind=self.__engine,
+                                     expire_on_commit=False)
         sess = scoped_session(session_maker)
         self.__session = sess
-        
+
     def save(self):
         """save all changes of the current db"""
         self.__session.commit()
