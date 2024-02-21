@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """ class for state """
-from models.base_model import BaseModel
-from models.base_model import Base
-from sqlalchemy.orm import sessionmaker, relationship
+import models
+from models.base_model import BaseModel, Base
 from models.city import City
-from sqlalchemy import Column, String
 from os import getenv
+import sqlalchemy
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
