@@ -21,4 +21,3 @@ class User(BaseModel, Base):
     reviews = relationship("Review",
                            cascade='all, delete, delete-orphan',
                            backref='user')
-    
