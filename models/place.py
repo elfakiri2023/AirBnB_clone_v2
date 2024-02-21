@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Place class for the database"""
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from os import getenv
 import models
