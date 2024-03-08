@@ -46,6 +46,7 @@ class Place(BaseModel, Base):
     else:
         @property
         def reviews(self):
+<<<<<<< HEAD
             """ returns the list of Review instances with place_id"""
             all_storage = models.storage.all()
             temp_list = []
@@ -64,6 +65,20 @@ class Place(BaseModel, Base):
     def amenities(self):
         """ returns the list of Amenity instances"""
         return self.amenity_ids
+=======
+            """ list of all reviews"""
+            temp_list = []
+            final_list = []
+            all_storage = models.storage.all()
+            for key in all_storage:
+                review_arr = shlex.split(key.replace('.', ' '))
+                if ('Review' == review_arr[0]):
+                    temp_list.append(all_storage[key])
+            for elem in temp_list:
+                if (self.id == elem.place_id): # if place_id matches
+                    final_list.append(elem)
+            return (final_list)
+>>>>>>> parent of 39402af... Updated models/place.py
 
     @amenities.setter
     def amenities(self, obj=None):
